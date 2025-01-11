@@ -96,7 +96,7 @@ impl ExchangeClient {
         let client = client.unwrap_or_default();
         let base_url = base_url.unwrap_or(BaseUrl::Mainnet);
 
-        let info = InfoClient::new(None, Some(base_url)).await?;
+        let info = InfoClient::new(None, Some(base_url))?;
         let meta = if let Some(meta) = meta {
             meta
         } else {
@@ -289,7 +289,7 @@ impl ExchangeClient {
             "https://api.hyperliquid-testnet.xyz" => BaseUrl::Testnet,
             _ => return Err(Error::GenericRequest("Invalid base URL".to_string())),
         };
-        let info_client = InfoClient::new(None, Some(base_url)).await?;
+        let info_client = InfoClient::new(None, Some(base_url))?;
         let user_state = info_client.user_state(wallet.address()).await?;
 
         let position = user_state
@@ -337,7 +337,7 @@ impl ExchangeClient {
             "https://api.hyperliquid-testnet.xyz" => BaseUrl::Testnet,
             _ => return Err(Error::GenericRequest("Invalid base URL".to_string())),
         };
-        let info_client = InfoClient::new(None, Some(base_url)).await?;
+        let info_client = InfoClient::new(None, Some(base_url))?;
         let meta = info_client.meta().await?;
 
         let asset_meta = meta
