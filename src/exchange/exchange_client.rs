@@ -139,13 +139,15 @@ impl ExchangeClient {
         };
         let res = serde_json::to_string(&exchange_payload)
             .map_err(|e| Error::JsonParse(e.to_string()))?;
-        debug!("Sending request {res:?}");
+        debug!("Sending request {res}");
 
         let output = &self
             .http_client
             .post("/exchange", res)
             .await
             .map_err(|e| Error::JsonParse(e.to_string()))?;
+
+        debug!("Received response {output}");
         serde_json::from_str(output).map_err(|e| Error::JsonParse(e.to_string()))
     }
 
